@@ -1,8 +1,15 @@
 class Validator {
   static validateUsername(username) {
-    const regex =
-      /^(?=.{3,20}$)(?![.\d_-])(?!.*[.\d_-]{2})[a-zA-Z0-9._-]+(?<![.\d_-])$/;
-    return regex.test(username);
+    const exceptThreeNumbersInRow = !/\d{4,}/.test(username);
+    const dashAccept = /^[\w-]+$/.test(username);
+    const notStartEndWithDigitOrDashOrUnderscore = /^[^\d_-].*[^\d_-]$/.test(
+      username
+    );
+    return (
+      exceptThreeNumbersInRow &&
+      dashAccept &&
+      notStartEndWithDigitOrDashOrUnderscore
+    );
   }
 }
 

@@ -2,31 +2,24 @@ import Validator from "../index";
 
 describe("Validator", () => {
   describe("validateUsername", () => {
-    it("should return false for username containing invalid characters", () => {
-      expect(Validator.validateUsername("user@name")).toBe(false);
-      expect(Validator.validateUsername("myusername#")).toBe(false);
+    it("должно возвращать значение true для действительного имени пользователя", () => {
+      expect(Validator.validateUsername("my-username")).toBe(true);
     });
 
-    it("should return false for username that is too short or too long", () => {
-      expect(Validator.validateUsername("a")).toBe(false);
-      expect(Validator.validateUsername("this_username_is_way_too_long")).toBe(
-        false
-      );
+    it("должно возвращать значение false для имени пользователя, содержащего более трех цифр подряд", () => {
+      expect(Validator.validateUsername("my_username-1234")).toBe(false);
     });
 
-    it("should return false for username starting or ending with invalid characters", () => {
-      expect(Validator.validateUsername(".username")).toBe(false);
-      expect(Validator.validateUsername("_username")).toBe(false);
-      expect(Validator.validateUsername("-username")).toBe(false);
-      expect(Validator.validateUsername("username.")).toBe(false);
-      expect(Validator.validateUsername("username_")).toBe(false);
-      expect(Validator.validateUsername("username-")).toBe(false);
+    it("должно возвращать значение false для имени пользователя, начинающегося с цифры", () => {
+      expect(Validator.validateUsername("1username")).toBe(false);
     });
 
-    it("should return false for username containing consecutive dots, underscores, or hyphens", () => {
-      expect(Validator.validateUsername("user..name")).toBe(false);
-      expect(Validator.validateUsername("myusername__")).toBe(false);
-      expect(Validator.validateUsername("myusername--")).toBe(false);
+    it("должно возвращать значение false для имени пользователя, заканчивающегося цифрой", () => {
+      expect(Validator.validateUsername("username1")).toBe(false);
+    });
+
+    it("должно возвращать значение false для имени пользователя с недопустимыми символами", () => {
+      expect(Validator.validateUsername("my.username")).toBe(false);
     });
   });
 });
